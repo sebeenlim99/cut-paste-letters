@@ -7,12 +7,22 @@
 <meta property="og:title" content="Cut &amp; Paste Letters">
 <meta property="og:description" content="단어를 입력하면 글자마다 다른 종이에서 오려 붙인 콜라주 글자 이미지를 만들어 줘요.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://cut-paste-letters.vercel.app/">
+<meta property="og:image" content="https://cut-paste-letters.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="종이에서 오려 붙인 글자로 쓴 CUT &amp; PASTE LETTERS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cut &amp; Paste Letters">
+<meta name="twitter:description" content="단어를 입력하면 글자마다 다른 종이에서 오려 붙인 콜라주 글자 이미지를 만들어 줘요.">
+<meta name="twitter:image" content="https://cut-paste-letters.vercel.app/og.png">
 <meta name="theme-color" content="#f7d3dc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='6' width='56' height='52' rx='12' fill='%239e2b2e' stroke='%234f1417' stroke-width='3' transform='rotate(-4 32 32)'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='38' fill='%23ffc4d3' stroke='%234f1417' stroke-width='2'%3EZ%3C/text%3E%3C/svg%3E">
 <title>Cut &amp; Paste Letters</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Bodoni+Moda:ital,wght@1,900&family=Bowlby+One&family=Bungee&family=Chango&family=Cherry+Cream+Soda&family=Courier+Prime:wght@700&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,wght@1,900&family=Lobster&family=Playfair+Display:ital,wght@0,900;1,900&family=Righteous&family=Rubik+Mono+One&family=Rye&family=Shrikhand&family=Special+Elite&family=Ultra&family=Black+Han+Sans&family=Gothic+A1:wght@400;700;800&family=DM+Mono:wght@500&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Bodoni+Moda:ital,wght@1,900&family=Bowlby+One&family=Bungee&family=Chango&family=Cherry+Cream+Soda&family=Courier+Prime:wght@700&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,wght@1,900&family=Lobster&family=Playfair+Display:ital,wght@0,900;1,900&family=Righteous&family=Rubik+Mono+One&family=Rye&family=Shrikhand&family=Special+Elite&family=Ultra&family=Black+Han+Sans&family=Gothic+A1:wght@400;700;800;900&family=DM+Mono:wght@500&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Gugi&family=Dokdo&family=Yeon+Sung&family=Gaegu:wght@700&family=Song+Myung&family=Nanum+Myeongjo:wght@800&family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=Gowun+Batang:wght@700&family=Noto+Serif+KR:wght@900&family=Hahmlet:wght@900&family=Bagel+Fat+One&family=Gasoek+One&family=Black+And+White+Picture&family=Kirang+Haerang&family=Stylish&family=Dongle:wght@700&family=Diphylleia&display=block">
 <style>
 [hidden]{display:none!important}
 html,body{margin:0}
@@ -103,6 +113,7 @@ button.primary:hover{background:var(--accent); filter:brightness(1.08)}
 .moodrow input:focus-visible{outline:3px solid var(--accent); outline-offset:1px}
 .moodrow button{padding:9px 14px}
 .examples, .preset-row{display:flex; flex-wrap:wrap; gap:6px}
+.exlbl{flex-basis:100%; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--muted); margin-top:2px}
 .examples button, .pchip{padding:4px 10px; font-size:12px; border-radius:999px; border-width:1.5px}
 .recos{display:grid; gap:8px}
 .recos:empty{display:none}
@@ -132,6 +143,15 @@ input[type=range]:focus-visible{outline:3px solid var(--accent); outline-offset:
 .note{margin:-12px 0 0; font-size:13px; color:var(--muted); min-height:1.5em}
 .actions #shuffle{grid-column:1 / -1}
 .actions #download, .actions #copy{font-size:16px; padding:12px 8px}
+/* keep every control column inside the screen on phones */
+.app > *, .controls, .card, .field, .editor, .reco, .recos, .moodrow, .pals, .chips, .tabs, .examples{min-width:0}
+.controls, .card, .editor, .reco, .recos, .field{grid-template-columns:minmax(0,1fr)}
+.pals{grid-template-columns:repeat(2,minmax(0,1fr))}
+.seg{grid-template-columns:repeat(3,minmax(0,1fr))}
+.moodrow input{width:0}
+.moodrow button{flex:none}
+.reco-card, .reco-card .sw{min-width:0; width:100%}
+.reco-card .sw i{min-width:0}
 </style>
 </head>
 <body>
@@ -161,7 +181,7 @@ input[type=range]:focus-visible{outline:3px solid var(--accent); outline-offset:
         <div class="editor" id="editor" hidden>
           <div class="reco">
             <label class="lbl" for="mood">느낌으로 추천받기</label>
-            <div class="moodrow"><input type="text" id="mood" placeholder="예: 봄 파스텔, 시크한 밤, 레트로 카페" autocomplete="off"><button type="button" class="primary" id="moodGo">추천</button></div>
+            <div class="moodrow"><input type="text" id="mood" placeholder="예: 봄 파스텔, 딸기 케이크, 레트로 카페" autocomplete="off"><button type="button" class="primary" id="moodGo">추천</button></div>
             <div class="examples" id="examples"></div>
             <div class="recos" id="recos"></div>
           </div>
@@ -213,6 +233,13 @@ const FONTS=[
   {f:'DM Serif Display',w:400},{f:'DM Serif Display',w:400,i:1},{f:'Righteous',w:400},{f:'Special Elite',w:400},
   {f:'Courier Prime',w:700},{f:'Bowlby One',w:400},{f:'Fraunces',w:900,i:1},{f:'Chango',w:400},{f:'Cherry Cream Soda',w:400}
 ];
+const KFONTS=[
+  {f:'Black Han Sans',w:400},{f:'Do Hyeon',w:400},{f:'Jua',w:400},{f:'Gugi',w:400},{f:'Dokdo',w:400},{f:'Yeon Sung',w:400},
+  {f:'Gaegu',w:700},{f:'Song Myung',w:400},{f:'Nanum Myeongjo',w:800},{f:'Nanum Brush Script',w:400},{f:'Nanum Pen Script',w:400},
+  {f:'Gowun Batang',w:700},{f:'Gothic A1',w:900},{f:'Noto Serif KR',w:900},{f:'Hahmlet',w:900},{f:'Bagel Fat One',w:400},
+  {f:'Gasoek One',w:400},{f:'Black And White Picture',w:400},{f:'Kirang Haerang',w:400},{f:'Stylish',w:400},{f:'Dongle',w:700},{f:'Diphylleia',w:400}
+];
+const isK=ch=>/[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/.test(ch);
 const fontStr=(F,size)=>`${F.i?'italic ':''}${F.w} ${size}px "${F.f}", Georgia, serif`;
 
 const PALETTES={
@@ -281,7 +308,7 @@ function colorize(s,pal){const P=PALETTES[pal];
   s.alt=contrastPick(s.fg,P.fg.concat(P.bg).filter(c=>c!==s.fg&&c!==s.bg),2);
   const rest=P.bg.filter(c=>c!==s.bg);s.under=pick(rest.length?rest:P.bg);}
 function newStyle(pal){
-  const s={font:pick(FONTS),scale:rr(.82,1.22),rot:rr(-1,1),dy:rr(-1,1),r:Array.from({length:64},Math.random),pad:rr(.1,.26),upper:Math.random()<.5};
+  const s={font:pick(FONTS),kfont:pick(KFONTS),scale:rr(.82,1.22),rot:rr(-1,1),dy:rr(-1,1),r:Array.from({length:64},Math.random),pad:rr(.1,.26),upper:Math.random()<.5};
   const p=Math.random(); s.shape=p<.55?'rect':p<.76?'torn':p<.9?'skew':'round';
   const t=Math.random(); s.text=t<.62?'plain':t<.76?'shadow':t<.87?'outline':'tight';
   if(s.text==='tight') s.pad=rr(.04,.08);
@@ -307,10 +334,10 @@ function shapePath(ctx,s,w,h){
 }
 
 function measure(ctx,s,ch,base){
-  const size=base*s.scale;ctx.font=fontStr(s.font,size);const m=ctx.measureText(ch);
+  const F=isK(ch)?s.kfont:s.font,size=base*s.scale;ctx.font=fontStr(F,size);const m=ctx.measureText(ch);
   const L=m.actualBoundingBoxLeft||0,Rt=m.actualBoundingBoxRight||m.width,A=m.actualBoundingBoxAscent||size*.7,D=m.actualBoundingBoxDescent||0;
   const gw=Math.max(L+Rt,size*.22),gh=Math.max(A+D,size*.3);
-  return {size,L,Rt,A,D,w:gw+size*s.pad*2,h:gh+size*s.pad*1.6};
+  return {F,size,L,Rt,A,D,w:gw+size*s.pad*2,h:gh+size*s.pad*1.6};
 }
 
 function setShadow(ctx,on,h){if(on){ctx.shadowColor='rgba(0,0,0,.3)';ctx.shadowBlur=h*.06;ctx.shadowOffsetX=h*.015;ctx.shadowOffsetY=h*.03}else{ctx.shadowColor='transparent'}}
@@ -320,7 +347,7 @@ function drawTile(ctx,t,o){
     shapePath(ctx,{shape:'rect',r:s.r.slice(12)},t.w*1.12,t.h*1.12);setShadow(ctx,o.shadow,t.h);ctx.fillStyle=s.under;ctx.fill();ctx.restore()}
   shapePath(ctx,s,t.w,t.h);setShadow(ctx,o.shadow,t.h);ctx.fillStyle=s.bg;ctx.fill();setShadow(ctx,false);
   ctx.save();ctx.clip();ctx.globalAlpha=.09;ctx.fillStyle=ctx.createPattern(noise,'repeat');ctx.fillRect(-t.w,-t.h,t.w*2,t.h*2);ctx.restore();
-  ctx.font=fontStr(s.font,t.size);ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.font=fontStr(t.F,t.size);ctx.textAlign='left';ctx.textBaseline='alphabetic';
   const x0=-(t.Rt-t.L)/2,y0=(t.A-t.D)/2;
   if(s.text==='shadow'){const off=t.size*.05;ctx.fillStyle=s.alt;ctx.fillText(t.ch,x0+off,y0+off)}
   if(s.text==='outline'){ctx.lineJoin='round';ctx.lineWidth=t.size*.08;ctx.strokeStyle=s.alt;ctx.strokeText(t.ch,x0,y0)}
@@ -426,7 +453,7 @@ const MOODS=[
  {k:['따뜻','포근','warm','cozy'],h:[[0,50]],s:[.5,.8],l:[.45,.75]},
  {k:['시원','차가','차갑','cool','cold'],h:[[180,250]],s:[.4,.75],l:[.45,.82]},
  {k:['파스텔','pastel','몰글','귀여','cute','말랑'],s:[.5,.8],l:[.8,.9]},
- {k:['비비드','쪅','vivid','강렬','팝','pop','원색'],s:[.85,1],l:[.45,.58]},
+ {k:['비비드','쨍','vivid','강렬','팝','pop','원색'],s:[.85,1],l:[.45,.58]},
  {k:['차분','calm','잔잔','뮤트','muted','편안'],s:[.15,.35],l:[.45,.75]},
  {k:['빈티지','vintage','앤틱','옛날'],h:[[20,45],[160,190],[350,360]],s:[.25,.45],l:[.4,.75]},
  {k:['다크','dark','어두','밤','night'],s:[.15,.45],l:[.12,.35]},
@@ -445,15 +472,53 @@ const MOODS=[
  {k:['상큼','fresh','레몬','시트러스','citrus','과일'],h:[[45,95],[15,30]],s:[.7,.95],l:[.5,.72]},
  {k:['빨강','red','열정'],h:[[350,360],[0,8]],s:[.65,.9],l:[.35,.6]},
  {k:['노랑','yellow','햇살'],h:[[42,58]],s:[.7,.95],l:[.55,.8]},
- {k:['오렌지','orange','주황'],h:[[18,35]],s:[.75,.95],l:[.5,.65]}
+ {k:['오렌지','orange','주황','귤','한라봉'],h:[[18,35]],s:[.75,.95],l:[.5,.65]},
+ {k:['피자','pizza'],h:[[0,8],[40,50],[95,115]],s:[.6,.85],l:[.4,.72]},
+ {k:['떡볶이','떡볶','tteokbokki','분식'],h:[[0,10],[15,28],[35,45]],s:[.7,.92],l:[.42,.68]},
+ {k:['딸기','strawberry'],h:[[345,360],[0,5],[100,130]],s:[.6,.85],l:[.5,.86]},
+ {k:['초코','chocolate','choco','브라우니'],h:[[15,30]],s:[.3,.55],l:[.15,.45]},
+ {k:['민트','mint'],h:[[150,172]],s:[.35,.6],l:[.6,.86]},
+ {k:['말차','matcha','녹차'],h:[[75,95]],s:[.3,.55],l:[.35,.78]},
+ {k:['라떼','latte','우유','milk'],h:[[25,40]],s:[.2,.4],l:[.6,.9]},
+ {k:['수박','watermelon'],h:[[350,360],[0,5],[110,135]],s:[.55,.85],l:[.35,.72]},
+ {k:['바나나','banana'],h:[[48,58]],s:[.7,.9],l:[.6,.86]},
+ {k:['블루베리','blueberry'],h:[[225,250]],s:[.35,.6],l:[.25,.62]},
+ {k:['체리','cherry'],h:[[345,355]],s:[.65,.9],l:[.3,.52]},
+ {k:['복숭아','peach'],h:[[10,25],[340,350]],s:[.6,.85],l:[.75,.88]},
+ {k:['마카롱','macaron','디저트','dessert'],s:[.5,.75],l:[.78,.88]},
+ {k:['아이스크림','ice cream','젤라또','gelato'],h:[[330,350],[150,170],[40,50],[20,30]],s:[.45,.7],l:[.8,.9]},
+ {k:['치즈','cheese'],h:[[42,52]],s:[.7,.9],l:[.55,.8]},
+ {k:['버거','burger','패스트푸드'],h:[[0,8],[38,48],[25,35],[100,120]],s:[.6,.85],l:[.35,.65]},
+ {k:['초밥','스시','sushi','연어','오마카세'],h:[[8,18],[350,360],[75,95],[30,40]],s:[.35,.75],l:[.4,.9]},
+ {k:['라멘','ramen','우동','국수','쌀국수'],h:[[30,45],[0,10]],s:[.35,.65],l:[.4,.82]},
+ {k:['와인','wine'],h:[[340,355]],s:[.45,.7],l:[.18,.42]},
+ {k:['맥주','beer','치맥','생맥'],h:[[38,45],[45,52]],s:[.7,.9],l:[.45,.88]},
+ {k:['칵테일','cocktail','하이볼'],h:[[300,330],[180,200],[30,45]],s:[.6,.9],l:[.45,.72]},
+ {k:['토마토','tomato'],h:[[0,10],[100,120]],s:[.65,.9],l:[.4,.62]},
+ {k:['아보카도','avocado'],h:[[70,90],[25,35]],s:[.35,.6],l:[.3,.72]},
+ {k:['당근','호박','고구마','pumpkin','carrot'],h:[[22,35],[270,285]],s:[.55,.85],l:[.35,.7]},
+ {k:['붕어빵','호떡','팥','길거리'],h:[[25,40],[350,360]],s:[.4,.7],l:[.3,.75]},
+ {k:['포도','grape'],h:[[270,290]],s:[.4,.65],l:[.3,.65]},
+ {k:['콜라','소다','사이다','탄산','soda','cola'],h:[[195,205],[0,5]],s:[.7,.95],l:[.4,.82]},
+ {k:['케이크','cake','쿠키','cookie','베이커리','bakery','빵','크로와상','브런치','brunch','팬케이크','도넛'],h:[[28,45]],s:[.45,.7],l:[.55,.86]},
+ {k:['카레','curry'],h:[[40,48],[20,30]],s:[.7,.9],l:[.4,.6]},
+ {k:['마라','훠궈','매운','spicy'],h:[[0,10],[355,360]],s:[.75,.95],l:[.3,.52]},
+ {k:['짜장','짬뽕','중식','탕수육'],h:[[25,35],[0,8]],s:[.5,.85],l:[.15,.5]},
+ {k:['치킨','chicken','후라이드'],h:[[30,40],[42,50]],s:[.6,.85],l:[.4,.7]},
+ {k:['김치','비빔밥','한식','김밥'],h:[[0,10],[90,120],[45,55]],s:[.5,.8],l:[.4,.72]},
+ {k:['삼겹살','고기','bbq','스테이크'],h:[[0,15]],s:[.35,.6],l:[.3,.75]}
 ];
 const PRESET_TAGS={ocean:['바다','여름','시원','blue','파랑'],forest:['숲','자연','초록','가을'],holiday:['크리스마스','겨울','홀리데이','연말'],
  pastel:['파스텔','봄','귀여','몰글'],neon:['네온','사이버','밤','클럽'],retro70:['레트로','70','가을'],kraft:['커피','브라운','종이','카페'],
  ink:['동양','한국','전통','먹','한지'],mocha:['커피','모카','브라운','가을','고급','카페'],candy:['귀여','핑크','달콤'],custard:['핑크','로맨틱','달콤','봄'],
- mintgrey:['차분','시원','몽환'],grape:['몽환','꿈','보라'],crimson:['강렬','빨강','시크'],y2k:['y2k','2000','팝','쪅'],klein:['쪅','강렬','파랑','팝'],
+ mintgrey:['차분','시원','몽환'],grape:['몽환','꿈','보라'],crimson:['강렬','빨강','시크'],y2k:['y2k','2000','팝','쨍'],klein:['쨍','강렬','파랑','팝'],
  colorfield:['따뜻','노을','가을'],honeycoral:['따뜻','여름','상큼'],brick:['차분','시크','파랑'],magazine:['빈티지','레트로','차분'],
- mono:['미니멀','모노','흑백','깔끔'],vivid:['비비드','쪅','팝','원색'],pin2026:['트렌디','2026','상큼'],livefall:['스트리트','힙','가을']};
-const EXAMPLES=['봄 소풍','시크한 밤','레트로 카페','쪅한 여름','몽환적인 보라','동양 전통','따뜻한 가을','상큼한 과일'];
+ mono:['미니멀','모노','흑백','깔끔'],vivid:['비비드','쨍','팝','원색'],pin2026:['트렌디','2026','상큼'],livefall:['스트리트','힙','가을']};
+const EXAMPLES=['봄 소풍','시크한 밤','레트로 카페','쨍한 여름','몽환적인 보라','동양 전통'];
+const FOOD_EXAMPLES=['딸기 케이크','민트초코','떡볶이','말차 라떼','피자 파티','초밥','치맥','수박'];
+[['candy',['마카롱','아이스크림','디저트','딸기']],['custard',['딸기','케이크','복숭아']],['mocha',['초코','라떼','빵','브런치']],['kraft',['라떼','빵','베이커리']],
+ ['honeycoral',['복숭아','토마토','귤']],['forest',['말차','아보카도']],['ink',['떡','팥']],['holiday',['와인','케이크']],['crimson',['체리','와인']],
+ ['pastel',['마카롱','아이스크림']],['retro70',['피자','버거','치킨']],['vivid',['콜라','소다']],['ocean',['소다','사이다']]].forEach(([k,w])=>PRESET_TAGS[k].push(...w));
 
 function hsl2hex(h,s,l){h=((h%360)+360)%360;const a=s*Math.min(l,1-l);
   const f=n=>{const k=(n+h/30)%12;const c=l-a*Math.max(-1,Math.min(k-3,9-k,1));return Math.round(c*255).toString(16).padStart(2,'0')};
@@ -477,7 +542,8 @@ function genPalette(rule,n=6){
   return out.map(c=>hsl2hex(c[0],c[1],c[2]));
 }
 const moodIn=$('mood'),recos=$('recos');let lastSets=[];
-$('examples').innerHTML=EXAMPLES.map(t=>`<button type="button" data-ex="${t}">${t}</button>`).join('');
+const exBtns=a=>a.map(t=>`<button type="button" data-ex="${t}">${t}</button>`).join('');
+$('examples').innerHTML=`<span class="exlbl">분위기</span>${exBtns(EXAMPLES)}<span class="exlbl">음식</span>${exBtns(FOOD_EXAMPLES)}`;
 function recommend(){
   const q=moodIn.value.trim().toLowerCase();
   if(!q){recos.innerHTML='<p class="hint">원하는 느낌을 단어로 적어 주세요. 예시 단어를 눌러도 돼요.</p>';return}
@@ -509,8 +575,16 @@ recos.addEventListener('click',e=>{
 const opts=()=>({base:+els.size.value,jitter:+els.jitter.value,palette,mixCase:els.mix.checked,shadow:els.shadow.checked,
   bg:document.querySelector('input[name=bg]:checked').value,maxW:1800});
 
-function render(){
+let renderSeq=0;
+async function render(){
   if(!ready)return;
+  const seq=++renderSeq,txt=els.text.value,byFont=new Map();
+  for(let i=0;i<txt.length;i++){const ch=txt[i];if(!isK(ch))continue;
+    if(!styles[i])styles[i]=newStyle(palette);
+    const fs=fontStr(styles[i].kfont,40);if(!document.fonts.check(fs,ch))byFont.set(fs,(byFont.get(fs)||'')+ch)}
+  if(byFont.size){$('loading').textContent='한글 폰트 오리는 중…';
+    await Promise.race([Promise.allSettled([...byFont].map(([fs,t])=>document.fonts.load(fs,t))),new Promise(r=>setTimeout(r,6000))]);
+    if(seq!==renderSeq)return}
   const o=opts();cur=compose(els.text.value,styles,o);
   els.out.src=cur.canvas.toDataURL('image/png');els.out.hidden=false;$('loading').hidden=true;
   els.sheet.classList.toggle('clear',o.bg==='clear');
