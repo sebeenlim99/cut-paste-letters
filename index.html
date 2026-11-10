@@ -152,6 +152,19 @@ input[type=range]:focus-visible{outline:3px solid var(--accent); outline-offset:
 .moodrow button{flex:none}
 .reco-card, .reco-card .sw{min-width:0; width:100%}
 .reco-card .sw i{min-width:0}
+.new{font:400 10px/1 var(--display); letter-spacing:.06em; background:var(--accent); color:var(--accent-ink); padding:4px 7px 3px; border-radius:999px}
+.card.event{background:#fff4e6}
+.card.event h2{background:#4a2a1e; color:#ffc4d3}
+.topping{display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px; cursor:pointer}
+.topping input{position:absolute; opacity:0; width:1px; height:1px}
+.sw-track{width:52px; height:30px; border-radius:999px; background:#d9c6b4; border:2px solid var(--line); position:relative; transition:background .15s}
+.sw-knob{position:absolute; top:2px; left:2px; width:22px; height:22px; border-radius:50%; background:#fff; border:2px solid var(--line); transition:transform .15s}
+.topping input:checked + .sw-track{background:#4a2a1e}
+.topping input:checked + .sw-track .sw-knob{transform:translateX(22px); background:#ffc4d3}
+.topping input:focus-visible + .sw-track{outline:3px solid var(--ink); outline-offset:2px}
+.topping-txt{display:grid; gap:2px; min-width:0}
+.topping-txt b{font-size:15px}
+.topping-txt small{font-size:12px; color:var(--muted)}
 </style>
 </head>
 <body>
@@ -174,6 +187,15 @@ input[type=range]:focus-visible{outline:3px solid var(--accent); outline-offset:
     </div>
 
     <aside class="controls" aria-label="설정">
+      <section class="card event">
+        <h2>11.11 빼빼로데이</h2>
+        <label class="topping" for="sprinkle">
+          <input type="checkbox" id="sprinkle">
+          <span class="sw-track" aria-hidden="true"><span class="sw-knob"></span></span>
+          <span class="topping-txt"><b>스프링클 토핑 뿌리기</b><small>초코, 딸기, 화이트, 아몬드 조각을 글자마다 뿌려요</small></span>
+          <span class="new">NEW</span>
+        </label>
+      </section>
       <section class="card">
         <h2>종이 팔레트</h2>
         <div class="tabs" id="tabs" role="tablist"></div>
@@ -351,7 +373,22 @@ function drawTile(ctx,t,o){
   const x0=-(t.Rt-t.L)/2,y0=(t.A-t.D)/2;
   if(s.text==='shadow'){const off=t.size*.05;ctx.fillStyle=s.alt;ctx.fillText(t.ch,x0+off,y0+off)}
   if(s.text==='outline'){ctx.lineJoin='round';ctx.lineWidth=t.size*.08;ctx.strokeStyle=s.alt;ctx.strokeText(t.ch,x0,y0)}
-  ctx.fillStyle=s.fg;ctx.fillText(t.ch,x0,y0);ctx.restore();
+  ctx.fillStyle=s.fg;ctx.fillText(t.ch,x0,y0);
+  if(o.sprinkle)drawSprinkles(ctx,t);
+  ctx.restore();
+}
+const SPRINKLE=['#4a2a1e','#6b3b26','#ff8fb1','#f4b6c8','#fff4e6','#ffffff','#e6b877','#c0392b'];
+function drawSprinkles(ctx,t){
+  const s=t.s;if(!s.sp)s.sp=Array.from({length:120},Math.random);
+  const r=s.sp,n=Math.min(24,Math.round(9+t.w*t.h/(t.size*t.size)*7));
+  const len=t.size*.1,wd=Math.max(2,t.size*.032);
+  ctx.save();shapePath(ctx,s,t.w,t.h);ctx.clip();ctx.lineCap='round';ctx.lineWidth=wd;
+  for(let k=0;k<n;k++){const b=k*4;
+    const x=(r[b]-.5)*t.w*.92,y=(r[b+1]-.5)*t.h*.92,a=r[b+2]*Math.PI,c=SPRINKLE[Math.floor(r[b+3]*SPRINKLE.length)];
+    const dx=Math.cos(a)*len/2,dy=Math.sin(a)*len/2;
+    ctx.strokeStyle='rgba(0,0,0,.2)';ctx.beginPath();ctx.moveTo(x-dx+wd*.3,y-dy+wd*.5);ctx.lineTo(x+dx+wd*.3,y+dy+wd*.5);ctx.stroke();
+    ctx.strokeStyle=c;ctx.beginPath();ctx.moveTo(x-dx,y-dy);ctx.lineTo(x+dx,y+dy);ctx.stroke()}
+  ctx.restore();
 }
 
 function compose(text,styles,o){
@@ -572,7 +609,7 @@ recos.addEventListener('click',e=>{
 });
 
 
-const opts=()=>({base:+els.size.value,jitter:+els.jitter.value,palette,mixCase:els.mix.checked,shadow:els.shadow.checked,
+const opts=()=>({base:+els.size.value,jitter:+els.jitter.value,palette,mixCase:els.mix.checked,shadow:els.shadow.checked,sprinkle:$('sprinkle').checked,
   bg:document.querySelector('input[name=bg]:checked').value,maxW:1800});
 
 let renderSeq=0;
@@ -599,7 +636,7 @@ let tmr;const soon=()=>{clearTimeout(tmr);tmr=setTimeout(render,90)};
 els.text.addEventListener('input',soon);
 els.size.addEventListener('input',()=>{$('sizeOut').textContent=els.size.value;soon()});
 els.jitter.addEventListener('input',()=>{$('jitterOut').textContent=els.jitter.value+'°';soon()});
-els.mix.addEventListener('change',render);els.shadow.addEventListener('change',render);
+els.mix.addEventListener('change',render);els.shadow.addEventListener('change',render);$('sprinkle').addEventListener('change',render);
 document.querySelectorAll('input[name=bg]').forEach(r=>r.addEventListener('change',render));
 pals.addEventListener('change',e=>{palette=lastPreset=e.target.value;recolor()});
 $('shuffle').addEventListener('click',()=>{styles=[];render()});
